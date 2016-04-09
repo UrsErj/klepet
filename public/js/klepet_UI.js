@@ -12,6 +12,7 @@ function divElementHtmlTekst(sporocilo) {
   return $('<div></div>').html('<i>' + sporocilo + '</i>');
 }
 
+
 function procesirajVnosUporabnika(klepetApp, socket) {
   var sporocilo = $('#poslji-sporocilo').val();
   sporocilo = dodajSmeske(sporocilo);
@@ -76,6 +77,7 @@ $(document).ready(function() {
   socket.on('sporocilo', function (sporocilo) {
     var novElement = divElementEnostavniTekst(sporocilo.besedilo);
     $('#sporocila').append(novElement);
+
   });
   
   socket.on('kanali', function(kanali) {
@@ -99,6 +101,12 @@ $(document).ready(function() {
     for (var i=0; i < uporabniki.length; i++) {
       $('#seznam-uporabnikov').append(divElementEnostavniTekst(uporabniki[i]));
     }
+    
+    $('#seznam-uporabnikov div').click(function() {
+      $('#poslji-sporocilo').val("/zasebno \"" +$(this).text() + "\"");
+      $('#poslji-sporocilo').focus();
+    });
+    
   });
 
   setInterval(function() {
