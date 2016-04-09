@@ -27,6 +27,9 @@ a {
   margin-right: 10px;
 }
 
+#MyImg{
+  margin-left: 20px;
+}
 
 #seznam-kanalov, #seznam-uporabnikov {
   float: right;
