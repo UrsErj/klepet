@@ -31,6 +31,12 @@ a {
   margin-left: 20px;
 }
 
+#MyVid{
+  width: 200px;
+  height: 150px;
+  margin-left: 20px; 
+}
+
 #seznam-kanalov, #seznam-uporabnikov {
   float: right;
   width: 100%;

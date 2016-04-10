@@ -26,8 +26,26 @@ function divElementImg(sporocilo) {
   return (img);
 }
 
+/////
+function divElementYt(sporocilo) {
+  var zacetek=sporocilo.indexOf('https://www.youtube.com/watch?v=')+32; 
+  var konec=sporocilo.length;
+  sporocilo="https://www.youtube.com/embed/" + sporocilo.substring(zacetek, konec);
+  
+  var ytv = $('<iFrame />', { 
+    id: 'MyVid',
+    src: sporocilo+'?autoplay=1',
+    allowfullscreen: ""
+    })
+  return (ytv);
+}
+
 function isImg(sporocilo) {
- return((sporocilo.indexOf('http://') > -1) || (sporocilo.indexOf('https://') > -1)) && ((sporocilo.indexOf('.jpg') > -1) || (sporocilo.indexOf('.png') > -1) || (sporocilo.indexOf('.gif') > -1));
+ return((sporocilo.indexOf('http://') > -1) || (sporocilo.indexOf('https://') > -1)) && ((sporocilo.indexOf('.jpg') > -1) || (sporocilo.indexOf('.png') > -1) || (sporocilo.indexOf('.gif') > -1)) && (sporocilo.indexOf('http://sandbox.lavbic.net/teaching/OIS/gradivo/')==-1);
+}
+
+function isYt(sporocilo) {
+ return((sporocilo.indexOf('https://www.youtube.com/watch?v=') > -1));
 }
 
 function procesirajVnosUporabnika(klepetApp, socket) {
@@ -40,19 +58,16 @@ function procesirajVnosUporabnika(klepetApp, socket) {
     if (sistemskoSporocilo) {
       $('#sporocila').append(divElementHtmlTekst(sistemskoSporocilo));
       /////
-      if(isImg(sistemskoSporocilo)){
-        $('#sporocila').append(divElementImg(sistemskoSporocilo));
-      }
+      if(isImg(sistemskoSporocilo)){$('#sporocila').append(divElementImg(sistemskoSporocilo));}
+      if(isYt(sistemskoSporocilo)){$('#sporocila').append(divElementYt(sistemskoSporocilo));}
     }
   } else {
     sporocilo = filtirirajVulgarneBesede(sporocilo);
     klepetApp.posljiSporocilo(trenutniKanal, sporocilo);
     $('#sporocila').append(divElementEnostavniTekst(sporocilo));
     ///////////
-    if(isImg(sporocilo)){
-      $('#sporocila').append(divElementImg(sporocilo));
-    }
-    
+    if(isImg(sporocilo)){$('#sporocila').append(divElementImg(sporocilo));}
+    if(isYt(sporocilo)){$('#sporocila').append(divElementYt(sporocilo));}
     $('#sporocila').scrollTop($('#sporocila').prop('scrollHeight'));
   }
 
@@ -105,9 +120,9 @@ $(document).ready(function() {
     $('#sporocila').append(novElement);
     
     ///////////////// 
-    if(isImg(sporocilo.besedilo)){
-      $('#sporocila').append(divElementImg(sporocilo.besedilo));
-    }
+    if(isImg(sporocilo.besedilo)){$('#sporocila').append(divElementImg(sporocilo.besedilo));}
+    
+    if(isYt(sporocilo.besedilo)){$('#sporocila').append(divElementYt(sporocilo.besedilo));}
 
   });
   
