@@ -16,7 +16,7 @@ Klepet.prototype.spremeniKanal = function(kanal) {
   });
 };
 
-Klepet.prototype.procesirajUkaz = function(ukaz) {
+Klepet.prototype.procesirajUkaz = function(ukaz,trenutniVzdevek) {
   var besede = ukaz.split(' ');
   ukaz = besede[0].substring(1, besede[0].length).toLowerCase();
   var sporocilo = false;
@@ -43,6 +43,22 @@ Klepet.prototype.procesirajUkaz = function(ukaz) {
         sporocilo = 'Neznan ukaz';
       }
       break;
+      /////////
+    case 'dregljaj':
+      besede.shift();
+      var besedilo = besede.join(' ');
+      var parametri = besedilo.split('\"');      
+      besede.shift();
+      ///
+      if((parametri[1]!=trenutniVzdevek)){  
+        if ((parametri)  ){
+          this.socket.emit('dregljaj', { vzdevek: parametri[1]});
+          //sporocilo = 'Dregljaj za ' + parametri[1] ;
+         } else {sporocilo = 'Neznan ukaz';}
+       } 
+      else {sporocilo = 'Neznan ukaz';} 
+      break;
+      ////////////////////
     default:
       sporocilo = 'Neznan ukaz.';
       break;

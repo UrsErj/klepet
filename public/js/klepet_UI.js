@@ -54,7 +54,7 @@ function procesirajVnosUporabnika(klepetApp, socket) {
   var sistemskoSporocilo;
 
   if (sporocilo.charAt(0) == '/') {
-    sistemskoSporocilo = klepetApp.procesirajUkaz(sporocilo);
+    sistemskoSporocilo = klepetApp.procesirajUkaz(sporocilo,trenutniVzdevek);
     if (sistemskoSporocilo) {
       $('#sporocila').append(divElementHtmlTekst(sistemskoSporocilo));
       /////
@@ -156,7 +156,14 @@ $(document).ready(function() {
     
   });
   
-  
+  /////////////////////////
+    socket.on('dregljaj', function (dregljaj) {
+      $('#vsebina').jrumble();
+      $('#vsebina').trigger('startRumble');
+      setInterval(function(){  $('#vsebina').trigger('stopRumble'); }, 1500);
+      
+    });
+
 
   setInterval(function() {
     socket.emit('kanali');
